@@ -2,12 +2,13 @@ var xCoords = [];
 var yCoords = [];
 
 $(document).ready(function () {
-    $('.line-area').click(function (e) {
+    $('#line-area').click(function (e) {
         var xCoord = 0;
         var yCoord = 0;
         xCoord = e.clientX;
         yCoord = e.clientY;
 
+        /* // Commenting Circle creation using div's going to try and use canvas drawing instead
         var circle = document.createElement("div");
         circle.classList.add("circle");
         circle.style.borderRadius = "50%"; //Make div a circle
@@ -15,7 +16,7 @@ $(document).ready(function () {
         circle.style.width = "25px";
         circle.style.backgroundColor = "black";
         circle.style.position = "absolute";
-        
+
         var startPositionX = xCoord - 12.5; // Circles radius is 12.5, changing start position allows circle center to be at the click
         var startPositionY =  yCoord - 12.5;
 
@@ -23,6 +24,13 @@ $(document).ready(function () {
         circle.style.top = "" + startPositionY + "px";
 
         $(".line-area").append(circle);
+        */
+
+        var lineArea = document.getElementById("line-area");
+        var lineContext = lineArea.getContext("2d");
+        var circle = new Path2D();
+        circle.arc(xCoord,yCoord,50,0,2*Math.PI);
+        lineContext.fill(circle);
 
         xCoords.push(xCoord);
         yCoords.push(yCoord);
@@ -36,7 +44,7 @@ $(document).ready(function () {
         var nextIndexToCheck = -1; // initial value doesn't matter
                                    // next index to check is the index that the
                                    // line ends at so it makes a continuous line
-        var lineArea = $(".line-area");
+        var lineArea = $("#line-area");
         var lineContext = lineArea.getContext("2d");
         lineContext.beginPath();
         for (i = 0; i < xCoords.length; i++) { // 0(N)
